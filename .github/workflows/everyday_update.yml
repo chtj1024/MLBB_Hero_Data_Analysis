@@ -1,0 +1,38 @@
+name: Daily MLBB Crawl
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 매일 UTC 00:00 (한국시간 09:00) 실행
+  workflow_dispatch:       # 수동 실행도 가능
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Run crawler
+        run: python crawl.py
+
+      - name: Commit and push index.html
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add index.html
+          git commit -m "Update stats $(date +'%Y-%m-%d')"
+          git push
