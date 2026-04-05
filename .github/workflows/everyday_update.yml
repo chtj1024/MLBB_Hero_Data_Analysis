@@ -27,7 +27,7 @@ jobs:
           sudo apt-get install -y google-chrome-stable
 
       - name: Run crawler
-        run: python mlbb_stats.ipynb
+        run: jupyter nbconvert --to notebook --execute mlbb_stats.ipynb
 
       - name: Commit and push index.html
         run: |
