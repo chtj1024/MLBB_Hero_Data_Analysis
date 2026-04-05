@@ -27,12 +27,12 @@ jobs:
           sudo apt-get install -y google-chrome-stable
 
       - name: Run crawler
-        run: python crawl.py
+        run: python mlbb_stats.ipynb
 
       - name: Commit and push index.html
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
+          git config user.name "chtj1024"
+          git config user.email "chlqnftkwh@naver.com"
           git add index.html
           git commit -m "Update stats $(date +'%Y-%m-%d')"
           git push
