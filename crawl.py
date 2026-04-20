@@ -63,8 +63,10 @@ df["win_rate_f"] = df["win_rate"].str.replace("%", "").astype(float)
 df["ban_rate_f"] = df["ban_rate"].str.replace("%", "").astype(float)
 df["win_ban_sum_f"] = df["win_rate_f"] + df["ban_rate_f"]
 df["win_ban_sum"] = df["win_ban_sum_f"].map(lambda x: f"{x:.2f}%")
+
+df = df.sort_values("win_ban_sum_f", ascending=False).reset_index(drop=True)
+
 df = df.drop(columns=["win_rate_f", "ban_rate_f", "win_ban_sum_f"])
-df = df.sort_values("win_ban_sum", ascending=False).reset_index(drop=True)
 
 # index.html 저장
 html_content = f"""
